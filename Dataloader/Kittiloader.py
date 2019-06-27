@@ -56,12 +56,13 @@ class Kittiloader(object):
         r_rgb = Image.open(r_rgb_path).convert('RGB')
         w, h = l_rgb.size
         focal_length, baseline = get_focal_length_baseline(cam_path, cam=self.cam)
-        depth = get_depth(cam_path, depth_path, [h,w], cam=self.cam, interp=False, vel_depth=True)
+        depth, depth_interp = get_depth(cam_path, depth_path, [h,w], cam=self.cam, interp=True, vel_depth=True)
 
         data = {}
         data['left_img'] = l_rgb
         data['right_img'] = r_rgb
         data['depth'] = depth
+        data['depth_interp'] = depth_interp
         data['fb'] = focal_length * baseline
         return data
 
