@@ -24,7 +24,7 @@ These methods helps user to define a pytorch Dataset in a more convenient way.
 
 The custom_xxx.py files can be modified by users to define their own transformers in practice.
 
-Just follow the base model, one can construct a variety of of pytorch DataLoaders quickly.
+Just follow the base transformer class, one can construct a variety of of pytorch DataLoaders quickly.
 
 An example is included in this module, which works well with dataset.py, which executes standard and the most straightforward pytorch DataLoader generation steps.
 
