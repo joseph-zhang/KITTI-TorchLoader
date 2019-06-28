@@ -26,7 +26,7 @@ The custom_xxx.py files can be modified by users to define their own transformer
 
 Just follow the base model, one can construct a variety of of pytorch DataLoaders quickly.
 
-An example is included in this module, which works with dataset.py, which execute a standard pytorch DataLoader generation.
+An example is included in this module, which works well with dataset.py, which executes standard and the most straightforward pytorch DataLoader generation steps.
 
 To use the given data loader, try the following code:
 
