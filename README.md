@@ -34,7 +34,8 @@ To use the given data loader, try the following code:
 from dataset import DataGenerator
 ...
 
-datagen = DataGenerator(<kitti_root_path>, phase=<'train', 'val' or 'test'>) # transformer will be defined automatically according to phase
+# transformer will be defined automatically according to phase once datagen instance is created
+datagen = DataGenerator(<kitti_root_path>, phase=<'train', 'val' or 'test'>)
 kittidataset = datagen.create_data(batch_size)
 
 # other code before training loop
