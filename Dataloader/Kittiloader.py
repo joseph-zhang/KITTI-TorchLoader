@@ -61,9 +61,9 @@ class Kittiloader(object):
         data = {}
         data['left_img'] = l_rgb
         data['right_img'] = r_rgb
-        data['depth'] = depth
-        data['depth_interp'] = depth_interp
-        data['fb'] = focal_length * baseline
+        data['depth'] = depth.astype(np.float32)
+        data['depth_interp'] = depth_interp.astype(np.float32)
+        data['fb'] = np.array(focal_length * baseline).astype(np.float32)
         return data
 
     def load_item(self, idx):
