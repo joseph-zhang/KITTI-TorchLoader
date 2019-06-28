@@ -42,9 +42,9 @@ kittidataset = datagen.create_data(batch_size)
 ...
 
 for epoch in range(num_epoches):
-# training loop for an epoch
+    # training loop for an epoch
     for id, batch in enumerate(kittidataset):
-        # here one an get various types of data
+        # various types of data can be acquired here
         left_img_batch = batch['left_img'] # batch of left image, id 02
         right_img_batch = batch['right_img'] # batch of right image, id 03
         depth_batch = batch['depth'] # the corresponding depth ground truth of given id
