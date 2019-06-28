@@ -3,7 +3,7 @@ Tools for [KITTI depth prediction](http://www.cvlibs.net/datasets/kitti/eval_dep
 
 This repo provides two useful modules for loading and preprocessing KITTI depth data set.
 
-#### Dataloader
+### Dataloader
 
 The module **Dataloader** provides an interface to load data items from eigen split.
 
@@ -20,7 +20,7 @@ data_item = loader.load_item(idx) # which is very suitable for pytorch dataloade
 
 These methods helps user to define a pytorch Dataset in a more convenient way.
 
-#### Transformer
+### Transformer
 
 The custom_xxx.py files can be modified by users to define their own transformers in practice.
 
