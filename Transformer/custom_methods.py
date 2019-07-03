@@ -75,18 +75,19 @@ class RandomRotate(BaseMethod):
         BaseMethod.__init__(self)
 
     @staticmethod
-    def rotate_pil(pil, interp=Image.BILINEAR):
+    def rotate_pil_func():
         degree = random.randrange(-500, 500)/100
-        return F.rotate(pil, degree, interp)
+        return (lambda pil, interp : F.rotate(pil, degree, interp))
 
     def __call__(self, data_item):
         self.set_data(data_item)
 
         if random.random() < 0.5:
-            data_item['left_img'] = self.rotate_pil(self.left_img, Image.BICUBIC)
-            data_item['right_img'] = self.rotate_pil(self.right_img, Image.BICUBIC)
-            data_item['depth'] = self.rotate_pil(self.depth, Image.BILINEAR)
-            data_item['depth_interp'] = self.rotate_pil(self.depth_interp, Image.BILINEAR)
+            rotate_pil = self.rotate_pil_func()
+            data_item['left_img'] = rotate_pil(self.left_img, Image.BICUBIC)
+            data_item['right_img'] = rotate_pil(self.right_img, Image.BICUBIC)
+            data_item['depth'] = rotate_pil(self.depth, Image.BILINEAR)
+            data_item['depth_interp'] = rotate_pil(self.depth_interp, Image.BILINEAR)
 
         return data_item
 
