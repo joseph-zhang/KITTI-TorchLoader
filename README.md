@@ -3,13 +3,13 @@ Tools and Dataloader for [KITTI depth prediction](http://www.cvlibs.net/datasets
 
 This repo provides two useful modules for loading and preprocessing KITTI depth data set.
 
-:bookmark: **Update Support For Depth Data Under 'KITTI Depth Prediction' Section**
+:bookmark: **Update Support For Depth Data Under "KITTI Depth Prediction" Section**
 
 Since KITTI provides [official depth prediction data](http://www.cvlibs.net/datasets/kitti/eval_depth.php?benchmark=depth_prediction), we can directly use these high quality depth map as ground truth, which are more dense than depth gt that we generated from [raw KITTI Velodyne data](http://www.cvlibs.net/datasets/kitti/raw_data.php).
 
-The following parts give a introduction of raw KITTI data loading and Pytorch dataset generating.
+The following parts give an introduction of raw KITTI data loading and Pytorch dataset generating.
 
-tip: to load official KITTI depth data, please use the corresponding  module in '/KITTIDepth'. 
+Tip: to load official KITTI depth data, please use the corresponding  module in '/KITTIDepth'.
 
 ---
 
