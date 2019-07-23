@@ -1,5 +1,5 @@
-# KITTITools
-Tools for [KITTI depth prediction](http://www.cvlibs.net/datasets/kitti/eval_depth.php?benchmark=depth_prediction) data processing.
+# KITTI-TorchLoader
+Tools and Dataloader for [KITTI depth prediction](http://www.cvlibs.net/datasets/kitti/eval_depth.php?benchmark=depth_prediction) and [KITTI raw](http://www.cvlibs.net/datasets/kitti/raw_data.php) data.
 
 This repo provides two useful modules for loading and preprocessing KITTI depth data set.
 
@@ -9,7 +9,7 @@ Since KITTI provides [official depth prediction data](http://www.cvlibs.net/data
 
 The following parts give a introduction of raw KITTI data loading and Pytorch dataset generating.
 
-To load official KITTI depth data, please use the corresponding  module in '/KITTIDepth'. 
+tip: to load official KITTI depth data, please use the corresponding  module in '/KITTIDepth'. 
 
 ---
 
