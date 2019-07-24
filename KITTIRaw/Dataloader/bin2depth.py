@@ -2,6 +2,7 @@ import os
 import numpy as np
 from PIL import Image
 from collections import Counter
+from scipy.interpolate import LinearNDInterpolator
 
 
 def read_calib_file(path):
@@ -37,7 +38,6 @@ def load_velodyne_points(file_name):
 
 def lin_interp(shape, xyd):
     # taken from https://github.com/hunse/kitti
-    from scipy.interpolate import LinearNDInterpolator
     m, n = shape
     ij, d = xyd[:, 1::-1], xyd[:, 2]
     f = LinearNDInterpolator(ij, d, fill_value=0)
@@ -74,9 +74,8 @@ def get_depth(calib_dir, velo_file_name, im_shape, cam=2, interp=False, vel_dept
 
     # check if in bounds
     # use minus 1 to get the exact same value as KITTI matlab code
-    velo_pts_im[:, 0] = np.round(velo_pts_im[:,0])
-    velo_pts_im[:, 1] = np.round(velo_pts_im[:,1])
-    velo_pts_im -= 1
+    velo_pts_im[:, 0] = np.round(velo_pts_im[:,0]) - 1
+    velo_pts_im[:, 1] = np.round(velo_pts_im[:,1]) - 1
     val_inds = (velo_pts_im[:, 0] >= 0) & (velo_pts_im[:, 1] >= 0)
     val_inds = val_inds & (velo_pts_im[:,0] < im_shape[1]) & (velo_pts_im[:,1] < im_shape[0])
     velo_pts_im = velo_pts_im[val_inds, :]
@@ -87,7 +86,7 @@ def get_depth(calib_dir, velo_file_name, im_shape, cam=2, interp=False, vel_dept
 
     # find the duplicate points and choose the closest depth
     inds = sub2ind(depth.shape, velo_pts_im[:, 1], velo_pts_im[:, 0])
-    dupe_inds = [item for item, count in Counter(inds).items() if count > 1]
+    dupe_inds = [item for item, count in Counter(inds).iteritems() if count > 1]
     for dd in dupe_inds:
         pts = np.where(inds==dd)[0]
         x_loc = int(velo_pts_im[pts[0], 0])
@@ -103,7 +102,7 @@ def get_depth(calib_dir, velo_file_name, im_shape, cam=2, interp=False, vel_dept
         return depth
 
 
-def get_focal_length_baseline(calib_dir, cam=2):
+def get_focal_length_baseline(calib_dir, cam):
     cam2cam = read_calib_file(os.path.join(calib_dir, 'calib_cam_to_cam.txt'))
     P2_rect = cam2cam['P_rect_02'].reshape(3,4)
     P3_rect = cam2cam['P_rect_03'].reshape(3,4)
