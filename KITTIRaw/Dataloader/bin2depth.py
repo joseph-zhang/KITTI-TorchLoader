@@ -86,7 +86,7 @@ def get_depth(calib_dir, velo_file_name, im_shape, cam=2, interp=False, vel_dept
 
     # find the duplicate points and choose the closest depth
     inds = sub2ind(depth.shape, velo_pts_im[:, 1], velo_pts_im[:, 0])
-    dupe_inds = [item for item, count in Counter(inds).iteritems() if count > 1]
+    dupe_inds = [item for item, count in Counter(inds).items() if count > 1]
     for dd in dupe_inds:
         pts = np.where(inds==dd)[0]
         x_loc = int(velo_pts_im[pts[0], 0])
