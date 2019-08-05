@@ -17,6 +17,9 @@ class BaseMethod(object):
         self.img = data_item['img']
         self.depth = data_item['depth']
 
+        if 'depth_interp' in data_item:
+            self.depth_interp = data_item['depth_interp']
+
     @staticmethod
     def _is_pil_image(img):
         if accimage is not None:
