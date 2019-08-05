@@ -6,7 +6,8 @@ from __future__ import print_function
 import os
 import numpy as np
 from PIL import Image
-
+from .interpd import interpdepth
+from .filldepth import fill_depth_colorization
 
 class Kittiloader(object):
     """
@@ -69,10 +70,10 @@ class Kittiloader(object):
         assert(np.max(depth_png) > 255)
 
         depth = depth_png.astype(np.float32) / 256.
-        depth[depth_png == 0] = -1.
+        #depth[depth_png == 0] = -1.
         return depth
 
-    def _read_data(self, item_files):
+    def _read_data(self, item_files, interp_method):
         rgb_path = self._check_path(item_files['rgb'], "Panic::Cannot find RGB Image")
         depth_path = self._check_path(item_files['depth'], "Panic::Cannot find depth file")
 
@@ -82,9 +83,26 @@ class Kittiloader(object):
         data = {}
         data['img'] = rgb
         data['depth'] = depth
+
+        if interp_method in ['nop', 'linear', 'nyu']:
+            if interp_method == 'linear':
+                data['depth_interp'] = interpdepth(depth)
+            elif interp_method == 'nyu':
+                image_data = rgb.convert('L')
+                image_gray_arr = np.array(image_data)
+                data['depth_interp'] = fill_depth_colorization(image_gray_arr, depth)
+            else:
+                pass
+        else:
+            raise ValueError("Panic::Invalid 'interp_method' parameter")
+
         return data
 
-    def load_item(self, idx):
+    def load_item(self, idx, interp_method='nop'):
+        """
+        load an item for training or test
+        interp_method can be selected from ['nop', 'linear', 'nyu']
+        """
         item_files = self.files[idx]
-        data_item = self._read_data(item_files)
+        data_item = self._read_data(item_files, interp_method)
         return data_item
