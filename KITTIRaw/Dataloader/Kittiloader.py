@@ -6,6 +6,7 @@ from __future__ import print_function
 import os
 import numpy as np
 from PIL import Image
+from .filldepth import fill_depth_colorization
 from .bin2depth import get_depth, get_focal_length_baseline
 
 
@@ -66,7 +67,17 @@ class Kittiloader(object):
         data['fb'] = np.array(focal_length * baseline).astype(np.float32)
         return data
 
-    def load_item(self, idx):
+    def load_item(self, idx, interp_method='linear'):
+        """
+        load an item for training or test
+        interp_method can be selected from [linear', 'nyu']
+        """
         item_files = self.files[idx]
         data_item = self._read_data(item_files)
+
+        if interp_method == 'nyu':
+            image_data = (data_item['left_img'], data_item['right_img'])[self.cam==3]
+            image_gray_arr = np.array(image_data.convert('L'))
+            data_item['depth_interp'] = fill_depth_colorization(image_gray_arr, data_item['depth'])
+
         return data_item
